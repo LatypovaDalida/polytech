@@ -1,0 +1,83 @@
+Table Hub_Students {
+  StudentID integer [primary key]
+  LoadDate timestamp
+  RecordSource varchar
+}
+
+Table Hub_Courses {
+  CourseID integer [primary key]
+  LoadDate timestamp
+  RecordSource varchar
+}
+
+Table Hub_PracticalWorks {
+  PracticalWorkID integer [primary key]
+  LoadDate timestamp
+  RecordSource varchar
+}
+
+// Link таблицы
+
+Table Link_Students_Courses {
+  LinkStudentsCoursesID integer [primary key]
+  StudentID integer
+  CourseID integer
+  LoadDate timestamp
+  RecordSource varchar
+}
+
+Table Link_Students_PracticalWorks {
+  LinkStudentsPracticalWorksID integer [primary key]
+  StudentID integer
+  PracticalWorkID integer
+  SubmissionDate timestamp
+  Grade integer
+  LoadDate timestamp
+  RecordSource varchar
+}
+
+// Satellite таблицы
+
+Table Satellite_Students {
+  StudentID integer [primary key]
+  FirstName varchar
+  LastName varchar
+  EnrollmentDate timestamp
+  Email varchar
+  PhoneNumber varchar
+  EffectiveDate timestamp
+  EndDate timestamp
+  LoadDate timestamp
+  RecordSource varchar
+}
+
+Table Satellite_Courses {
+  CourseID integer [primary key]
+  CourseName varchar
+  Description  varchar
+  EffectiveDate timestamp
+  EndDate timestamp
+  LoadDate timestamp
+  RecordSource varchar
+}
+
+Table Satellite_PracticalWorks {
+  PracticalWorkID integer [primary key]
+  Title varchar
+  Description varchar
+  EffectiveDate timestamp
+  EndDate timestamp
+  LoadDate timestamp
+  RecordSource varchar
+}
+
+// Определение связей между таблицами
+
+Ref: Link_Students_Courses.StudentID > Hub_Students.StudentID // many-to-one
+Ref: Link_Students_Courses.CourseID > Hub_Courses.CourseID // many-to-one
+Ref: Link_Students_PracticalWorks.StudentID > Hub_Students.StudentID // many-to-one
+Ref: Link_Students_PracticalWorks.PracticalWorkID > Hub_PracticalWorks.PracticalWorkID // many-to-one
+
+Ref: Satellite_Students.StudentID > Hub_Students.StudentID // many-to-one
+Ref: Satellite_Courses.CourseID > Hub_Courses.CourseID // many-to-one
+Ref: Satellite_PracticalWorks.PracticalWorkID > Hub_PracticalWorks.PracticalWorkID // many-to-one
